@@ -28,19 +28,22 @@ class ListViewUsing extends StatelessWidget {
               index % 2 == 0 ? Colors.orange.shade100 : Colors.purple.shade100,
           child: ListTile(
             onTap: () {
-              if (index % 2 == 0) {
-                EasyLoading.instance.backgroundColor = Colors.red;
-              } else {
-                EasyLoading.instance.backgroundColor = Colors.yellow;
-              }
-              EasyLoading.showToast(
-                'Tıklandı...',
-                duration: Duration(
-                  seconds: 3,
-                ),
-                dismissOnTap: true,
-                toastPosition: EasyLoadingToastPosition.bottom,
-              );
+              // if (index % 2 == 0) {
+              //   EasyLoading.instance.backgroundColor = Colors.red;
+              // } else {
+              //   EasyLoading.instance.backgroundColor = Colors.yellow;
+              // }
+              // EasyLoading.showToast(
+              //   'Tıklandı...',
+              //   duration: Duration(
+              //     seconds: 3,
+              //   ),
+              //   dismissOnTap: true,
+              //   toastPosition: EasyLoadingToastPosition.bottom,
+              // );
+            },
+            onLongPress: () {
+              _alertDialogProcess(context, students);
             },
             title: Text(students.name),
             subtitle: Text(students.surname),
@@ -80,6 +83,41 @@ class ListViewUsing extends StatelessWidget {
           .toList(),
     );
   }
+
+  void _alertDialogProcess(BuildContext myContext, Student choosenStudent) {
+    showDialog(
+        barrierDismissible: false,
+        context: myContext,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(choosenStudent.toString()),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text('Mehmet' * 100),
+                  Text('Akbaba' * 100),
+                ],
+              ),
+            ),
+            actions: [
+              ButtonBar(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Kapat'),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text('Tamam'),
+                  ),
+                ],
+              ),
+            ],
+          );
+        });
+  }
 }
 
 class Student {
@@ -88,4 +126,10 @@ class Student {
   final String surname;
 
   Student(this.id, this.name, this.surname);
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return 'Name : $name Surname : $surname';
+  }
 }
